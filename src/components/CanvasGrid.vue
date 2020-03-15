@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import AutomataEngine from "../automata/AutomataEngine";
+
 export default {
   name: "CanvasGrid",
   props: ["options", "height", "width"],
@@ -11,37 +13,45 @@ export default {
       canvas: null,
       context: null,
       gridOriginX: 0,
-      gridOriginY: 0
+      gridOriginY: 0,
+      cellSize: 0
     };
+  },
+  created() {
+    const engine = new AutomataEngine(15, 20, 2, 5);
+    engine.initFirstGeneration();
+    engine.generateTransitions();
+    engine.calculateGenealogy();
+    // engine.debugPrint();
   },
   methods: {
     drawGrid() {
       let s = this.calculateCellSize();
-      let nX = this.options.generationSize;
-      let nY = this.options.generationCount;
-      let pX = this.width - nX * s;
-      let pY = this.height - nY * s;
-      let pL = Math.ceil(pX / 2) - 0.5;
-      let pT = Math.ceil(pY / 2) - 0.5;
-      let pR = this.width - nX * s - pL;
-      let pB = this.height - nY * s - pT;
-      console.log("S: ", s);
-      console.log("nY: ", nY);
+      let numberX = this.options.generationSize;
+      let numberY = this.options.generationCount;
+      let pixelX = this.width - numberX * s;
+      let pixelY = this.height - numberY * s;
+      let pixelLeft = Math.ceil(pixelX / 2) - 0.5;
+      let pixelTop = Math.ceil(pixelY / 2) - 0.5;
+      let pixelRight = this.width - numberX * s - pixelLeft;
+      let pixelBottom = this.height - numberY * s - pixelTop;
 
-      this.gridOriginX = pL;
-      this.gridOriginY = pT;
+      this.cellSize = s;
+      this.gridOriginX = pixelLeft;
+      this.gridOriginY = pixelTop;
       this.context.strokeStyle = "lightgrey";
       this.context.beginPath();
 
-      for (var x = pL; x <= this.width - pR; x += s) {
-        this.context.moveTo(x, pT);
-        this.context.lineTo(x, this.height - pB);
+      for (let x = pixelLeft; x <= this.width - pixelRight; x += s) {
+        this.context.moveTo(x, pixelTop);
+        this.context.lineTo(x, this.height - pixelBottom);
       }
 
-      for (var y = pT; y <= this.height - pB; y += s) {
-        this.context.moveTo(pL, y);
-        this.context.lineTo(this.width - pR, y);
+      for (let y = pixelTop; y <= this.height - pixelBottom; y += s) {
+        this.context.moveTo(pixelLeft, y);
+        this.context.lineTo(this.width - pixelRight, y);
       }
+
       this.context.stroke();
     },
     calculateCellSize() {

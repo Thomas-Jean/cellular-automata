@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app color="primary" clipped-right dark dense>
       <div class="d-flex align-center">
         1D Cellular Automata
       </div>
@@ -19,13 +19,15 @@
         <v-icon>mdi-cog</v-icon>
       </v-btn>
     </v-app-bar>
+
+    <v-navigation-drawer app right clipped v-model="settings">
+      <options-form :options="options"></options-form>
+    </v-navigation-drawer>
+
     <v-content>
-      <v-navigation-drawer v-model="settings" right absolute>
-        <options-form :options="options"></options-form>
-      </v-navigation-drawer>
       <v-container>
         <v-row>
-          <v-col ref="canvas-parent"
+          <v-col ref="canvas-parent" xs="12" md="8"
             ><canvas-grid
               ref="canvas-grid"
               :options="options"
@@ -33,7 +35,7 @@
               :height="height"
             />
           </v-col>
-          <v-col><hello-world /></v-col>
+          <v-col xs="12" md="4"><hello-world /></v-col>
         </v-row>
       </v-container>
     </v-content>
@@ -54,15 +56,14 @@ export default {
       width: 250,
       height: 400,
       options: {
-        generationSize: 25,
-        generationCount: 40,
-        radius: 5,
+        generationSize: 10,
+        generationCount: 15,
+        radius: 2,
         generationDelay: 100
       }
     };
   },
   mounted() {
-    this.options.generationSize = 20;
     this.width = this.floorPx(this.$refs["canvas-parent"].clientWidth);
     this.height = this.floorPx(this.$refs["canvas-parent"].clientHeight);
 
