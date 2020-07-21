@@ -20,8 +20,12 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer app right clipped v-model="settings">
-      <options-form :options="options"></options-form>
+    <v-navigation-drawer app right temporary clipped v-model="settings">
+      <options-form
+        :options="options"
+        :toggle="settings"
+        @close="toggleSettings"
+      ></options-form>
     </v-navigation-drawer>
 
     <v-content>
@@ -35,7 +39,7 @@
               :height="height"
             />
           </v-col>
-          <v-col xs="12" md="4"><hello-world /></v-col>
+          <v-col xs="12" md="4"><info-section @redraw="triggerRedraw"/></v-col>
         </v-row>
       </v-container>
     </v-content>
@@ -45,31 +49,43 @@
 <script>
 import OptionsForm from "./components/OptionsForm";
 import CanvasGrid from "./components/CanvasGrid";
-import HelloWorld from "./components/HelloWorld";
+import InfoSection from "./components/InfoSection";
 
 export default {
   name: "App",
-  components: { OptionsForm, CanvasGrid, HelloWorld },
+  components: { OptionsForm, CanvasGrid, InfoSection },
   data: () => {
     return {
       settings: false,
-      width: 250,
-      height: 400,
+      width: 0,
+      height: 0,
+      redraw: false,
       options: {
-        generationSize: 10,
-        generationCount: 15,
+        generationSize: 20,
+        generationCount: 30,
         radius: 2,
+        states: 5,
+        extended: false,
         generationDelay: 100
       }
     };
   },
   mounted() {
     this.width = this.floorPx(this.$refs["canvas-parent"].clientWidth);
-    this.height = this.floorPx(this.$refs["canvas-parent"].clientHeight);
 
-    this.$nextTick(() => {
-      this.$refs["canvas-grid"].setupGrid();
-    });
+    if (!this.width) {
+      this.width = this.floorPx(window.innerWidth);
+    }
+
+    this.width -= 25;
+
+    this.height = this.floorPx(window.innerHeight * 0.9);
+
+    if (this.width && this.height) {
+      this.$nextTick(() => {
+        this.$refs["canvas-grid"].setupGrid();
+      });
+    }
   },
   methods: {
     toggleSettings() {
@@ -77,6 +93,12 @@ export default {
     },
     floorPx(dim) {
       return dim - ((dim - 1) % 50) - 1;
+    },
+    triggerRedraw() {
+      this.$nextTick(() => {
+        this.$refs["canvas-grid"].buildEngine();
+        this.$refs["canvas-grid"].setupGrid();
+      });
     }
   }
 };

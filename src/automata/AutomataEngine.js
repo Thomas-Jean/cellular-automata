@@ -58,10 +58,4 @@ export default class AutomataEngine {
       this.genealogy.push(newGen);
     }
   }
-
-  debugPrint() {
-    for (let i = 0; i < this.genealogy.length; i++) {
-      console.log(this.genealogy[i]);
-    }
-  }
 }
