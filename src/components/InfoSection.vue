@@ -7,8 +7,8 @@
         </h4>
 
         <p class="font-weight-regular">
-          One Dimensional Cellular Automaton show a series of transitions of a
-          group of "cells" over a discrete time
+          This One Dimensional Cellular Automaton shows a series of transitions
+          of a group of "cells" over a discrete time
         </p>
         <p class="font-weight-regular">
           Depending on these transitions,static, repeating or chaotic patterns
@@ -18,7 +18,9 @@
           Additional Reading:<br />
           <a href="https://mathworld.wolfram.com/CellularAutomaton.html"
             >Wolfram</a
-          >&nbsp;<a href="https://en.wikipedia.org/wiki/Cellular_automaton"
+          >
+          <br />
+          <a href="https://en.wikipedia.org/wiki/Cellular_automaton"
             >Wikipedia</a
           >
         </p>
