@@ -11,7 +11,7 @@
           of a group of "cells" over a discrete time
         </p>
         <p class="font-weight-regular">
-          Depending on these transitions,static, repeating or chaotic patterns
+          Depending on these transitions, static, repeating or chaotic patterns
           can emerge
         </p>
         <p class="font-weight-regular">
