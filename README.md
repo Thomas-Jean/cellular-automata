@@ -1,29 +1,15 @@
 # cellular-automata
 
+generate random 1D automata in the browser
+
 ## Project setup
-```
-yarn install
-```
+```bash
+yarn install # install dependencies 
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+yarn serve # run dev server
 
-### Compiles and minifies for production
-```
-yarn build
-```
+# or
 
-### Run your unit tests
-```
-yarn test:unit
-```
+yarn build # build production assets
 
-### Lints and fixes files
 ```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
